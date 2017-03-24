@@ -92,7 +92,7 @@
       "**/*.cshtml",
       "appsettings.json",
       "web.config",
-      "project.*.json"
+      "project.json"
     ]
   },
 
