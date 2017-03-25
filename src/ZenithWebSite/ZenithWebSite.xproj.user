@@ -10,5 +10,6 @@
     <WebStackScaffolding_DbContextTypeFullName>ZenithWebSite.Models.ZenithContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
+    <NameOfLastUsedPublishProfile>ZenithWebSite20170323070432 - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>
