@@ -41,14 +41,6 @@ namespace ZenithWebSite
 
 
 
-
-
-
-
-
-
-
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options => {
@@ -60,6 +52,15 @@ namespace ZenithWebSite
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            // Add service and create Policy with options
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
 
             // Configure Identity to use the same JWT claims as OpenIddict instead
             // of the legacy WS-Federation claims it uses by default (ClaimTypes),
@@ -90,6 +91,7 @@ namespace ZenithWebSite
 
             var connection = Configuration["Data:DefaultConnection:ConnectionString"];
             services.AddDbContext<ZenithContext>(options => options.UseSqlite(connection));
+
 
             services.AddMvc().AddJsonOptions(options => {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -150,8 +152,10 @@ namespace ZenithWebSite
 
             app.UseIdentity();
 
+            app.UseCors("CorsPolicy");
+
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
-            
+
             // Register the validation middleware, that is used to decrypt
             // the access tokens and populate the HttpContext.User property.
             app.UseOAuthValidation();
@@ -165,7 +169,7 @@ namespace ZenithWebSite
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            context.Database.Migrate();
+            //context.Database.Migrate();
             SeedData.Initialize(context);
         }
     }
